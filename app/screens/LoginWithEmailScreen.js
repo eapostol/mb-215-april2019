@@ -103,6 +103,17 @@ const defaultFormValue = {
 }
 
 class LoginWithEmailScreen extends Component {
+  componentDidUpdate(prevProps) {
+    const { loginResponse: prevLoginResponse } = prevProps
+    const { loginResponse, navigation } = this.props
+    if (prevLoginResponse.loginReducer.isLoggedIn
+      !== loginResponse.loginReducer.isLoggedIn
+      && loginResponse.loginReducer.isLoggedIn
+    ) {
+      navigation.navigate('Home')
+    }
+  }
+
   // eslint-disable-next-line camelcase
   UNSAFE_componentWillMount() {
 
@@ -129,12 +140,6 @@ class LoginWithEmailScreen extends Component {
 
   render() {
     const { loginResponse, navigation } = this.props
-    const loggedIn = loginResponse.loginReducer.isLoggedIn
-    if (loggedIn === true) {
-      return (
-        navigation.navigate('Home')
-      )
-    }
 
     return (
       <View style={styles.container}>
