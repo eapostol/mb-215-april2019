@@ -63,6 +63,10 @@ ProfileCanvas.propTypes = {
   isEdit: PropTypes.bool,
 }
 
+ProfileCanvas.defaultProps = {
+  isEdit: false,
+}
+
 const ButtonGroupRow = (props) => {
   const { buttons, onPress, selectedIndex } = props
 
@@ -105,7 +109,11 @@ const ProfileName = (props) => {
 
 ProfileName.propTypes = {
   profileName: PropTypes.string.isRequired,
-  isEdit: PropTypes.bool.isRequired,
+  isEdit: PropTypes.bool,
+}
+
+ProfileName.defaultProps = {
+  isEdit: false,
 }
 
 const ProfileImage = (props) => {
@@ -170,7 +178,11 @@ const ProfileImage = (props) => {
 }
 ProfileImage.propTypes = {
   profileImage: PropTypes.string.isRequired,
-  isEdit: PropTypes.bool.isRequired,
+  isEdit: PropTypes.bool,
+}
+
+ProfileImage.defaultProps = {
+  isEdit: false,
 }
 
 const styles = StyleSheet.create({

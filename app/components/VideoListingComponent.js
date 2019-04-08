@@ -6,6 +6,7 @@ import { Icon } from 'react-native-elements'
 import * as PropTypes from 'prop-types'
 import { FormatData } from '../helpers/helpers'
 import playBtn from '../assets/images/play-btn.png'
+import defaultVideoThumbnail from '../assets/images/default-video.png'
 
 const numColumns = 2
 
@@ -60,7 +61,7 @@ class VideoListingComponent extends Component {
         }}
       >
         <View>
-          <Image style={styles.vidimg} source={{ uri: item.thumbString }} />
+          <Image style={styles.vidimg} source={{ uri: item.thumbString }} defaultSource={defaultVideoThumbnail} />
           <View style={styles.vidcap}>
             <Image style={styles.playicon} source={playBtn} />
             {isEdit === true && <Icon name="edit" size="15" containerStyle={{ position: 'absolute', top: -100, right: 0, backgroundColor: '#dcdcdc', borderRadius: 30, padding: 3 }} />}
@@ -89,7 +90,11 @@ class VideoListingComponent extends Component {
 VideoListingComponent.propTypes = {
   data: PropTypes.array.isRequired,
   setModalVisible: PropTypes.func.isRequired,
-  isEdit: PropTypes.bool.isRequired,
+  isEdit: PropTypes.bool,
+}
+
+VideoListingComponent.defaultProps = {
+  isEdit: false,
 }
 
 const styles = StyleSheet.create({

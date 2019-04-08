@@ -50,7 +50,11 @@ AthletesProfileScreen.propTypes = {
   onPress: PropTypes.func.isRequired,
   analytics: PropTypes.object.isRequired,
   navigation: PropTypes.object.isRequired,
-  isEdit: PropTypes.bool.isRequired,
+  isEdit: PropTypes.bool,
+}
+
+AthletesProfileScreen.defaultProps = {
+  isEdit: false,
 }
 
 export default withProfileCanvas()(AthletesProfileScreen)
