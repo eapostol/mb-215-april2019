@@ -1,0 +1,43 @@
+image: node:alpine
+
+definitions:
+  caches:
+    npm: ~/.npm
+
+stepdefinitions:
+  - buildAPK: &buildAPK
+      name: Build standalone APK
+      deployment: test
+      caches:
+        - npm
+      script:
+        - echo "Step name - Build standalone APK"
+        - echo "install bash on build server and run npm ci"
+          && apk add --no-cache bash git
+          && npm ci
+        - echo "Build the apk using expo"
+          && npx expo login --username $EXPO_USERNAME --password $EXPO_PASSWORD
+          && npx expo build:android
+        - echo "post link to apk in slack"
+          && node scripts/ci.slacknotification.js mobile
+
+  - deployToExpo: &deployToExpo
+      name: Deploy to Expo
+      script:
+        - echo "Step name - Deploy to expo. To build the standalone apk rename branch to build-apk-**topic"
+        - echo "install bash on build server and run npm ci"
+          && apk add --no-cache bash git
+          && npm ci
+        - echo "login to the expo service and publish the app to Expo"
+          && npx expo login --username $EXPO_USERNAME --password $EXPO_PASSWORD
+          && npx expo publish
+
+pipelines:
+
+  default:
+    - step: *deployToExpo
+  branches:
+    master:
+      - step: *buildAPK
+    'build-apk-**':
+      - step: *buildAPK
